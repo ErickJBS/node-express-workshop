@@ -2,7 +2,7 @@
   "name": "express-workshop",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "node .",
     "dev": "nodemon .",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ErickJBS/node-express-workshop#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1"
   },
   "devDependencies": {
