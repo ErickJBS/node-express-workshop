@@ -1,22 +1,65 @@
+const NoteModel = require('../models/notes.model')
+const RequestException = require('../errors/request.exception')
+
 class NotesService {
 
     async create(note) {
-        return {}
+        const newNote = new NoteModel(note);
+        return newNote.save();
     }
 
     async findAll({ startDate, endDate, userId }) {
-        return [];
+        const filter = {};
+        if (userId) {
+            filter['userId'] =  userId;
+        }
+        if (startDate || endDate) {
+            filter['createdAt'] = {};
+        }
+        if (startDate) {
+            filter['createdAt']['$gte'] = startDate;
+        }
+        if (endDate) {
+            filter['createdAt']['$lte'] = endDate
+        }
+
+        return NoteModel.find(filter)
     }
 
     async findById(id) {
-        return {};
+        const note = await NoteModel.findById(id);
+        if (!note) {
+            throw new RequestException(404, 'Note not found')
+        }
+        return note;
     }
 
     async update(id, note) {
-        return {};
+        const exists = await NoteModel.findById(id);
+        if (!exists) {
+            throw new RequestException(404, 'Note not found')
+        }
+
+        const { content } = note;
+
+        const fields = {
+            content
+        }
+        
+        return NoteModel.findByIdAndUpdate(
+            id, fields, {
+                new: true,
+                useFindAndModify: false
+            }
+        );
     }
 
     async remove(id) {
+        const exists = await NoteModel.findById(id);
+        if (!exists) {
+            throw new RequestException(404, 'Note not found')
+        }
+        return NoteModel.deleteOne({ _id: id });
     }
 }
 module.exports = new NotesService();

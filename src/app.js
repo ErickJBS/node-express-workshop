@@ -18,6 +18,7 @@ class App {
     }
 
     initializeMiddlewares() {
+        this.app.use(express.json({ extended: false }))
         this.app.use(cors())
     }
     

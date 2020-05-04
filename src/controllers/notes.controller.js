@@ -6,8 +6,9 @@ const create = async (request, response) => {
         const savedNote = await NotesService.create(note);
         return response.send(savedNote);
     } catch(e) {
+        const code = e.errorCode || 500;
         console.log(e);
-        return response.status(400).send();
+        return response.status(code).json({ errors: [{ msg: e.message }] });
     }
 }
 
@@ -17,8 +18,9 @@ const findAll = async (request, response) => {
         const notes = await NotesService.findAll({ startDate, endDate, userId });
         return response.send(notes);
     } catch (e) {
+        const code = e.errorCode || 500;
         console.log(e);
-        return response.status(500).send();
+        return response.status(code).json({ errors: [{ msg: e.message }] });
     }
 }
 
@@ -28,8 +30,9 @@ const findById = async (request, response) => {
         const note = await NotesService.findById(noteId);
         return response.send(note);
     } catch (e) {
+        const code = e.errorCode || 500;
         console.log(e);
-        return response.status(500).send();
+        return response.status(code).json({ errors: [{ msg: e.message }] });
     }
 }
 
@@ -40,8 +43,9 @@ const update = async (request, response) => {
         const updatedNote = await NotesService.update(noteId, note);
         return response.send(updatedNote);
     } catch (e) {
+        const code = e.errorCode || 500;
         console.log(e);
-        return response.status(500).send();
+        return response.status(code).json({ errors: [{ msg: e.message }] });
     }
 }
 
@@ -51,8 +55,9 @@ const remove = async (request, response) => {
         await NotesService.remove(noteId);
         return response.send();
     } catch (e) {
+        const code = e.errorCode || 500;
         console.log(e);
-        return response.status(500).send();
+        return response.status(code).json({ errors: [{ msg: e.message }] });
     }
 }
 
