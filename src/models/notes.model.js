@@ -5,13 +5,12 @@ const NoteSchema = new Schema({
         type: String,
         required: true,
         maxlength: 500
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'User'
     }
-    // ,
-    // userId: {
-    //     type: Schema.Types.ObjectId,
-    //     required: true,
-    //     ref: 'User'
-    // }
 }, {
     timestamps: true,
     toJSON: {

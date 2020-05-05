@@ -10,6 +10,7 @@ line of configuration to set a required environment variable named CONNECTION_ST
 
 ```
 CONNECTION_STRING = mongodb+srv://<user>:<password>@<host>/<databaseb>?retryWrites=true&w=majority
+JWT_SECRET = <supersecret>
 ```
 
 If you are using an Atlas cluster you can get your connection string from your settings dashboard

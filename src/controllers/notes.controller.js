@@ -1,6 +1,12 @@
+const { validationResult } = require('express-validator')
 const NotesService = require('../services/notes.service')
 
 const create = async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        response.status(400).send({ errors: errors.array() })
+    }
+
     const note = request.body;
     try {
         const savedNote = await NotesService.create(note);
@@ -13,6 +19,11 @@ const create = async (request, response) => {
 }
 
 const findAll = async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        response.status(400).send({ errors: errors.array() })
+    }
+
     const { startDate, endDate, userId } = request.query;
     try {
         const notes = await NotesService.findAll({ startDate, endDate, userId });
@@ -25,6 +36,11 @@ const findAll = async (request, response) => {
 }
 
 const findById = async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        response.status(400).send({ errors: errors.array() })
+    }
+
     const noteId = request.params.noteId;
     try {
         const note = await NotesService.findById(noteId);
@@ -37,6 +53,11 @@ const findById = async (request, response) => {
 }
 
 const update = async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        response.status(400).send({ errors: errors.array() })
+    }
+
     const note = request.body;
     const noteId = request.params.noteId;
     try {
@@ -50,6 +71,11 @@ const update = async (request, response) => {
 }
 
 const remove = async (request, response) => {
+    const errors = validationResult(request)
+    if (!errors.isEmpty()) {
+        response.status(400).send({ errors: errors.array() })
+    }
+    
     const noteId = request.params.noteId;
     try {
         await NotesService.remove(noteId);

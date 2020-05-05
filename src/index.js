@@ -9,6 +9,7 @@ const connectionString = process.env.CONNECTION_STRING;
 
 const app = new App(port, [
     require('./routes/notes.router'),
+    require('./routes/users.router')
 ]);
 const database = new Connection(connectionString);
 
