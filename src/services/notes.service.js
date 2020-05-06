@@ -23,7 +23,7 @@ class NotesService {
             filter['createdAt']['$lte'] = endDate
         }
 
-        return NoteModel.find(filter)
+        return NoteModel.find(filter).populate('userId', 'name email')
     }
 
     async findById(id) {

@@ -13,7 +13,10 @@ router.get('/notes/:noteId', [
     auth,
     check('noteId').isMongoId().withMessage('Invalid ID')
 ], NotesController.findById);
-router.post('/notes', auth, NotesController.create);
+router.post('/notes', [ 
+    auth,
+    check('userId', 'userId is required').exists().isMongoId().withMessage('Invalid Id')
+], NotesController.create);
 router.put('/notes/:noteId', auth, NotesController.update);
 router.delete('/notes/:noteId', auth, NotesController.remove);
 

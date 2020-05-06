@@ -1,11 +1,21 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
 
 class App {
 
     constructor(port, routes = []) {
         this.port = port;
         this.app = new express();
+
+        this.app.set('view engine', 'pug')
+        this.app.get('/', (request, response) => {
+            response.render('index', {
+                title: 'Hello',
+                message: 'Hello World'
+            })
+        })
+        // this.app.use(express.static(path.join(__dirname, 'public')))
 
         this.initializeMiddlewares();
         this.initializeRoutes(routes);

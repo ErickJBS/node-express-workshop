@@ -13,5 +13,6 @@ router.post('/signup', [
     check('email', 'Email must be a valid email').isEmail(),
     check('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
 ], UsersController.signUp)
+router.get('/user/:userId', UsersController.getProfile);
 
 module.exports = router;

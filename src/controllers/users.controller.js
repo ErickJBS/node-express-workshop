@@ -1,6 +1,22 @@
 const UsersService = require('../services/users.service')
 const { validationResult } = require('express-validator')
 
+const getProfile = async (request, response) => {
+    const userId = request.params.userId;
+    try {
+        const user = await UsersService.findUserById(userId)
+        response.render('profile', {
+            name: user.name,
+            email: user.email
+        })
+    } catch (e) {
+        response.render('not_found', {
+            resource: 'User',
+            id: userId
+        })
+    }
+}
+
 const signIn = async (request, response) => {
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
@@ -36,5 +52,5 @@ const signUp = async (request, response) => {
 }
 
 module.exports = {
-    signIn, signUp
+    signIn, signUp, getProfile
 }

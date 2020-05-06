@@ -4,6 +4,16 @@ const User = require('../models/user.model')
 const RequestException = require('../errors/request.exception')
 
 class UserService {
+
+    async findUserById(id) {
+        const user = await User.findById(id).select('-password');
+        if (!user) {
+            throw new RequestException(404, 'User does not exists');
+        }
+
+        return user;
+    }
+
     async signIn(email, password) {
         let user = await User.findOne({ email });
         if (!user) {
